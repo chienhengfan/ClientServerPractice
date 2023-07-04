@@ -74,7 +74,9 @@ namespace ChatRoom
                 string sName = aTokens[1];
                 string sMessage = aTokens[2];
                 Debug.Log(sName + " said: " + sMessage);
-                reciever = aTokens;
+                Debug.Log(aTokens);
+                Debug.Log(reciever);
+                //aTokens.CopyTo(reciever, 0);
             }
         }
     }
