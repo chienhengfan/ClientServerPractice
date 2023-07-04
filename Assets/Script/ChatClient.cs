@@ -73,10 +73,8 @@ namespace ChatRoom
                 string[] aTokens = sRequest.Split(':');
                 string sName = aTokens[1];
                 string sMessage = aTokens[2];
-                Debug.Log(sName + " said: " + sMessage);
-                Debug.Log(aTokens);
-                Debug.Log(reciever);
-                //aTokens.CopyTo(reciever, 0);
+                //Debug.Log(sName + " said: " + sMessage);
+                Array.Copy(aTokens, reciever, 3);
             }
         }
     }

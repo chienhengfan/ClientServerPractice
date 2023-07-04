@@ -12,7 +12,7 @@ public class Main : MonoBehaviour
     public TMPro.TMP_InputField adressInput = null;
     public TMPro.TMP_InputField nameInput = null;
     public TMPro.TMP_InputField messageInput = null;
-    public TMPro.TMP_Text dialogue = null;
+    public TMPro.TextMeshProUGUI dialogue = null;
     ChatClient client = new ChatClient();
     public bool ConnectSuccess;
     public int port = 4099;
@@ -29,19 +29,19 @@ public class Main : MonoBehaviour
     {
         if (ConnectSuccess)
         {
-            string[] token = null;
+            string[] token = new string[3];
             client.Run(ref token);
 
-            if(token != null)
+
+            string sName = token[1];
+            //Debug.Log(sName);
+            string sMessage = token[2];
+            if (sName != null && sMessage != null)
             {
-                string sName = token[1];
-                string sMessage = token[2];
                 dialogue.text = sName + " said: " + sMessage;
             }
-            else
-            {
-                Debug.Log(token);
-            }
+            Debug.Log(dialogue.text);
+
         }
 
         
