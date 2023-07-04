@@ -12,8 +12,9 @@ public class Main : MonoBehaviour
     public TMPro.TMP_InputField adressInput = null;
     public TMPro.TMP_InputField nameInput = null;
     public TMPro.TMP_InputField messageInput = null;
+    public TMPro.TMP_Text dialogue = null;
     ChatClient client = new ChatClient();
-    public bool IsSuccess;
+    public bool ConnectSuccess;
     public int port = 4099;
 
     // Start is called before the first frame update
@@ -26,7 +27,24 @@ public class Main : MonoBehaviour
 
     private void Update()
     {
+        if (ConnectSuccess)
+        {
+            string[] token = null;
+            client.Run(ref token);
 
+            if(token != null)
+            {
+                string sName = token[1];
+                string sMessage = token[2];
+                dialogue.text = sName + " said: " + sMessage;
+            }
+            else
+            {
+                Debug.Log(token);
+            }
+        }
+
+        
     }
 
     public void ClickButton()
@@ -34,9 +52,9 @@ public class Main : MonoBehaviour
         string address = adressInput.text;
         string name = nameInput.text;;
 
-        IsSuccess = client.Connect(address, port);
+        ConnectSuccess = client.Connect(address, port);
         client.SendName(name);
-        if (IsSuccess)
+        if (ConnectSuccess)
         {
             Debug.Log("connect server success!");
             Debug.Log($"your name is : {name}");
@@ -46,7 +64,7 @@ public class Main : MonoBehaviour
 
     public void ClickSendMessage()
     {
-        if (IsSuccess)
+        if (ConnectSuccess)
         {
             string message = messageInput.text;
             client.SendBroadcast(message);

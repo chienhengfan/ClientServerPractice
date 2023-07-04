@@ -53,20 +53,20 @@ namespace ChatRoom
             m_theClient.Send(aRequestBuffer, aRequestBuffer.Length, m_theEndPoint);
         }
 
-        public void Run()
+        public void Run(ref string[] reciever)
         {
             if (m_theClient.Available > 0)
             {
-                _HandleReceiveMessages(m_theClient);
+                _HandleReceiveMessages(m_theClient,ref reciever);
             }
         }
 
-        public void _HandleReceiveMessages(UdpClient theClient)
+        public void _HandleReceiveMessages(UdpClient theClient, ref string[] reciever)
         {
             IPEndPoint ep = null;
             byte[] aBuffer = theClient.Receive(ref ep);
 
-            string sRequest = System.Text.Encoding.UTF8.GetString(aBuffer);
+            string sRequest = System.Text.Encoding.ASCII.GetString(aBuffer);
 
             if (sRequest.StartsWith("MESSAGE:", StringComparison.OrdinalIgnoreCase))
             {
@@ -74,6 +74,7 @@ namespace ChatRoom
                 string sName = aTokens[1];
                 string sMessage = aTokens[2];
                 Debug.Log(sName + " said: " + sMessage);
+                reciever = aTokens;
             }
         }
     }
