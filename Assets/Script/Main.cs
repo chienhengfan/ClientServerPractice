@@ -15,8 +15,7 @@ public class Main : MonoBehaviour
     public TMPro.TextMeshProUGUI dialogue = null;
     ChatClient client = new ChatClient();
     public bool ConnectSuccess;
-    public int port = 4099;
-    private string[] token = new string[3];
+    public int port = 4099; 
 
     // Start is called before the first frame update
     void Awake()
@@ -30,14 +29,15 @@ public class Main : MonoBehaviour
     {
         if (ConnectSuccess)
         {
-           
+            string[] token = new string[3];
+
             client.Run(ref token);
             string sName = token[1];
             //Debug.Log(sName);
             string sMessage = token[2];
             if (sName != null && sMessage != null)
             {
-                dialogue.text = sName + " said: " + sMessage;
+                dialogue.text += sName + " said: " + sMessage +"\n";
             }
             Debug.Log(dialogue.text);
 
